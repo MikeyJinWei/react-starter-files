@@ -39,42 +39,66 @@
 -->
           <script>
             // 表達式與陳述式的差異
+            // 陳述（宣告）式
+            function declarativeFn() {}
+            // 表達式（賦值）
+            const expressionFn = function () {};
           </script>
 
           <script type="text/babel">
-            // function App() {
-            //   const data = {
-            //     imageUrl: 'https://images.unsplash.com/photo-1564564321837-a57b7070ac4f?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2352&q=80',
-            //     name: '卡斯伯',
-            //     description: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Modi culpa aspernatur tempore cupiditate illo minima voluptatem blanditiis optio accusantium earum voluptate magni repellendus, ipsa dolor adipisci libero qui commodi veritatis.',
-            //     link: 'https://www.casper.tw/'
-            //   }
-            //   return <div className="card w-50">
-            //     <img src={data.imageUrl} className="card-img-top" alt="..." />
-            //     <div className="card-body">
-            //       <h5 className="card-title">{ data.name }</h5>
-            //       <p className="card-text">{ data.description }</p>
-            //       <a href={data.link} target="_blank" className="btn btn-primary">Go somewhere</a>
-            //     </div>
-            //   </div>
-            // }
+            function App() {
+              const data = {
+                imageUrl:
+                  "https://images.unsplash.com/photo-1564564321837-a57b7070ac4f?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2352&q=80",
+                name: "", // 故意將 data.name 改成空 string
+                description:
+                  "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Modi culpa aspernatur tempore cupiditate illo minima voluptatem blanditiis optio accusantium earum voluptate magni repellendus, ipsa dolor adipisci libero qui commodi veritatis.",
+                link: "https://www.casper.tw/",
+              };
+              return (
+                <div className="card w-50">
+                  <img src={data.imageUrl} className="card-img-top" alt="..." />
+                  <div className="card-body">
+                    <h5 className="card-title">
+                      {/* 插入 ternary */}
+                      {data.name
+                        ? data.name
+                        : "尚無標題，因為 data.name 為 falsy"}
+                      {/* 沒辦法插入 statement, e.g. if...else */}
+                      {/* 
+                        { if (data.name) {
+                          return data.name
+                        } else {
+                          return "尚無標題，因為 data.name 為 falsy"
+                        }}
+                      */}
+                    </h5>
+                    <p className="card-text">{data.description}</p>
+                    <a
+                      href={data.link}
+                      target="_blank"
+                      className="btn btn-primary"
+                    >
+                      Go somewhere
+                    </a>
 
-            // const el = document.getElementById('root')
-            // const root = ReactDOM.createRoot(el);
-            // root.render(<App/>);
-
-            let a = 1; // statement
-            console.log((a = 2)); // expression
-
-            if (true) {
-              console.log(123);
+                    {/* 插入固定值 */}
+                    <br />
+                    <div>{1}</div>
+                    {/* 插入判斷表達式 */}
+                    <div>{0 || 1}</div>
+                    {/* 表達函式的同時執行 */}
+                    {(function () {
+                      return 2 * 2;
+                    })()}
+                  </div>
+                </div>
+              );
             }
 
-            let condition = true;
-            const text = condition
-              ? "exprIfTrue: 我餓了"
-              : "exprIfFalse: 我不餓";
-            console.log(text); // exprIfTrue: 我餓了
+            const el = document.getElementById("root");
+            const root = ReactDOM.createRoot(el);
+            root.render(<App />);
           </script>
 
           <!-- 🙇🙇練習結束🙇🙇 -->
