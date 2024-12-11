@@ -39,93 +39,47 @@
           <div id="root"></div>
           <script type="text/babel">
             function App() {
-              const products = {
-                toothbrush: {
+              const products = [
+                {
                   imgUrl:
                     "https://images.unsplash.com/photo-1520013573795-38516d2661e4?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1536&q=80",
                   title: "清潔力超強牙刷",
                   price: 99,
                   link: "https://www.google.com/",
                 },
-                sponge: {
+                {
                   imgUrl:
                     "https://images.unsplash.com/photo-1618038483079-bfe64dcb17f1?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80",
                   title: "洗刷刷海綿",
                   price: 65,
                   link: "https://twitter.com/",
                 },
-                hook: {
+                {
                   imgUrl:
                     "https://images.unsplash.com/photo-1546552696-7d5f4e89b0e8?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80",
                   title: "萬用掛勾",
                   price: 120,
                   link: "https://www.facebook.com/WccCasper",
                 },
-              };
+              ];
 
               return (
                 <div className="row row-cols-3">
-                  <div className="col">
-                    <a
-                      className="card"
-                      target="_blank"
-                      href={products.toothbrush.link}
-                    >
-                      <img
-                        src={products.toothbrush.imgUrl}
-                        className="card-img-top object-fit"
-                        alt="..."
-                      />
-                      <div className="card-body">
-                        <span className="text-dark">
-                          {products.toothbrush.title}
-                        </span>
-                        <span className="float-end">
-                          ${products.toothbrush.price}
-                        </span>
-                      </div>
-                    </a>
-                  </div>
-                  <div className="col">
-                    <a
-                      className="card"
-                      target="_blank"
-                      href={products.sponge.link}
-                    >
-                      <img
-                        src={products.sponge.imgUrl}
-                        className="card-img-top object-fit"
-                        alt="..."
-                      />
-                      <div className="card-body">
-                        <span className="text-dark">
-                          {products.sponge.title}
-                        </span>
-                        <span className="float-end">
-                          ${products.sponge.price}
-                        </span>
-                      </div>
-                    </a>
-                  </div>
-                  <div className="col">
-                    <a
-                      className="card"
-                      target="_blank"
-                      href={products.hook.link}
-                    >
-                      <img
-                        src={products.hook.imgUrl}
-                        className="card-img-top object-fit"
-                        alt="..."
-                      />
-                      <div className="card-body">
-                        <span className="text-dark">{products.hook.title}</span>
-                        <span className="float-end">
-                          ${products.hook.price}
-                        </span>
-                      </div>
-                    </a>
-                  </div>
+                  {products.map((product, i) => (
+                    <div key={i} className="col">
+                      <a className="card" target="_blank" href={product.link}>
+                        <img
+                          src={product.imgUrl}
+                          className="card-img-top object-fit"
+                          alt="..."
+                        />
+                        <div className="card-body">
+                          <span className="text-dark">{product.title}</span>
+                          <span className="float-end">${product.price}</span>
+                        </div>
+                      </a>
+                    </div>
+                  ))}
                 </div>
               );
             }
