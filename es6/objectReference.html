@@ -85,20 +85,26 @@
             // console.log("person: ", person, "person2: ", person2);
 
             // #3-2 深層拷貝
-            const person = {
-              name: "小明",
-              obj: {},
-            };
-            // JSON.parse(JSON.stringify(originalObject))
-            const person2 = JSON.parse(JSON.stringify(person));
-            person2.name = "杰倫";
-            person2.obj.name = "person2 的 obj.name";
-            console.log("person: ", person, "person2: ", person2);
+            // const person = {
+            //   name: "小明",
+            //   obj: {},
+            // };
+            // // JSON.parse(JSON.stringify(originalObject))
+            // const person2 = JSON.parse(JSON.stringify(person));
+            // person2.name = "杰倫";
+            // person2.obj.name = "person2 的 obj.name";
+            // console.log("person: ", person, "person2: ", person2);
 
-            const Card = ({ person }) => {
+            const Card = ({ person, changePersonName }) => {
               return (
                 <div className="card">
                   <div className="card-body">{person.name}</div>
+                  <input
+                    type="text"
+                    className="form-control"
+                    onChange={changePersonName}
+                    value={person.name}
+                  />
                 </div>
               );
             };
@@ -122,7 +128,10 @@
                     onChange={changePersonName}
                     value={person.name}
                   />
-                  <Card person={person}></Card>
+                  <Card
+                    person={person}
+                    changePersonName={changePersonName}
+                  ></Card>
                 </div>
               );
             };
