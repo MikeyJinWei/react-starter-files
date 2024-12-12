@@ -90,21 +90,40 @@
             //   });
 
             // #2-3 失敗捕捉
-            promiseSetTimeout(0)
-              .then((res) => {
-                console.log(res);
-              })
-              .catch((err) => {
-                alert(err); // 可能使用 alert/modal/toast UI 提醒使用者發生錯誤
-                console.log(err); // debug 時可能會新增 console.log() 進行錯誤處理
-              });
+            // promiseSetTimeout(0)
+            //   .then((res) => {
+            //     console.log(res);
+            //   })
+            //   .catch((err) => {
+            //     alert(err); // 可能使用 alert/modal/toast UI 提醒使用者發生錯誤
+            //     console.log(err); // debug 時可能會新增 console.log() 進行錯誤處理
+            //   });
 
             // #3 實戰取得遠端資料
             // #3-1
             // https://github.com/axios/axios
-
-            // #3-2 記得捕捉錯誤，Axios 錯誤捕捉技巧
             // https://randomuser.me/
+            // 顯示某 js object 的 properties 列表
+            // console.dir(axios);
+            // axios
+            //   .get("https://randomuser.me/api/")
+            //   .then((res) => {
+            //     console.log("第一次 res", res);
+            //     return axios.get("https://randomuser.me/api/");
+            //   })
+            //   .then((res) => {
+            //     console.log("第二次 res", res);
+            //   });
+            // #3-2 記得捕捉錯誤，Axios 錯誤捕捉技巧
+            axios
+              .get("https://randomuser.me/ap/") // 故意在 URL 少打一個字符製造錯誤
+              .then((res) => {
+                console.log(res);
+              })
+              .catch((err) => {
+                console.log(err);
+                alert(err.message);
+              });
           </script>
           <!-- 🙇🙇練習結束🙇🙇 -->
         </main>
