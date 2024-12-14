@@ -56,33 +56,47 @@
                             <div className="card text-center">
                               <div className="card-header">
                                 <div className="h4 my-0">
-                                  {/* CITY/COUNTY */}
                                   {city.locationName}
                                 </div>
                               </div>
                               <div className="card-body">
-                                <div className="row rol-cols-3">
-                                  <div className="col">
-                                    <div className="h4 my-2">
-                                      {/* DATE */}
-                                      23日
-                                    </div>
-                                    {/* TIME */}
-                                    下午6:00 <br />
-                                    ~<br />
-                                    上午6:00
-                                    <img src="./weatherIcon/多雲.svg" alt="" />
-                                    <div className="mt-2">
-                                      {/* WEATHER DESC */}
-                                      多雲時陰有雨
-                                    </div>
-                                    <div className="mt-2">
-                                      {/* WEATHER ICON, CHANCE OF RAIN */}
-                                      <i className="bi bi-umbrella-fill" /> 10%
-                                    </div>
-                                  </div>
-                                  <div className="col"></div>
-                                  <div className="col"></div>
+                                <div className="row row-cols-3">
+                                  {/* city.weatherElement[0] */}
+
+                                  {city.weatherElement[0].time.map(
+                                    (time, index) => {
+                                      return (
+                                        // 時間序不會去更動，所以 index 可以當作 key
+                                        <div key={index} className="col">
+                                          <div className="h4 my-2">
+                                            {/* DATE */}
+                                            23日
+                                          </div>
+                                          {/* TIME */}
+                                          下午6:00 <br />
+                                          ~<br />
+                                          上午6:00
+                                          <img
+                                            src={`./weatherIcon/${time.parameter.parameterName}.svg`}
+                                            alt={time.parameter.parameterName}
+                                          />
+                                          <div className="mt-2">
+                                            {time.parameter.parameterName}
+                                          </div>
+                                          <div className="mt-2">
+                                            {/* WEATHER ICON, CHANCE OF RAIN */}
+                                            <i className="bi bi-umbrella-fill" />{" "}
+                                            {/* city.weatherElement[4] */}
+                                            {
+                                              city.weatherElement[4].time[index] // 使用剛在 city.weatherElement[0].time 傳進來的 index
+                                                .parameter.parameterName
+                                            }
+                                            %
+                                          </div>
+                                        </div>
+                                      );
+                                    }
+                                  )}
                                 </div>
                               </div>
                             </div>
