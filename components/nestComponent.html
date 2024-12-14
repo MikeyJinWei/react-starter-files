@@ -33,11 +33,11 @@
           <!-- 🔥🔥練習開始🔥🔥 -->
           <div id="root"></div>
           <script type="text/babel">
-            const PrimaryButton = ({ className, callToAction }) => {
+            const PrimaryButton = ({ className, callToAction, children }) => {
               return (
                 // 預留 className props 供父層級傳樣式調整
                 <button type="button" className={`btn ${className}`}>
-                  {callToAction}
+                  {children}
                 </button>
               );
             };
@@ -63,12 +63,18 @@
                       <PrimaryButton
                         callToAction={callToAction}
                         className="btn-primary"
-                      />
+                      >
+                        <i className="bi bi-gem" />
+                        {callToAction}
+                        <i className="bi bi-gem" />
+                      </PrimaryButton>
                     ) : (
                       <PrimaryButton
                         callToAction={callToAction}
                         className="btn-outline-primary"
-                      />
+                      >
+                        {callToAction}
+                      </PrimaryButton>
                     )}
                   </div>
                 </div>
