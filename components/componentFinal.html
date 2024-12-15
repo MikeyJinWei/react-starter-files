@@ -70,7 +70,9 @@
                                         <div key={index} className="col">
                                           <div className="h4 my-2">
                                             {/* DATE */}
-                                            23日
+                                            {new Date(
+                                              time.startTime
+                                            ).toString()}
                                           </div>
                                           {/* TIME */}
                                           下午6:00 <br />
