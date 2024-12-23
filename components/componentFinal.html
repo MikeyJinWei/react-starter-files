@@ -69,15 +69,26 @@
                                         // 時間序不會去更動，所以 index 可以當作 key
                                         <div key={index} className="col">
                                           <div className="h4 my-2">
-                                            {/* DATE */}
                                             {new Date(
                                               time.startTime
-                                            ).toString()}
+                                            ).toLocaleDateString(undefined, {
+                                              day: "numeric",
+                                            })}
                                           </div>
-                                          {/* TIME */}
-                                          下午6:00 <br />
+                                          {new Date(
+                                            time.startTime
+                                          ).toLocaleString(undefined, {
+                                            hour: "numeric",
+                                            minute: "numeric",
+                                          })}
+                                          <br />
                                           ~<br />
-                                          上午6:00
+                                          {new Date(
+                                            time.endTime
+                                          ).toLocaleString(undefined, {
+                                            hour: "numeric",
+                                            minute: "numeric",
+                                          })}
                                           <img
                                             src={`./weatherIcon/${time.parameter.parameterName}.svg`}
                                             alt={time.parameter.parameterName}
