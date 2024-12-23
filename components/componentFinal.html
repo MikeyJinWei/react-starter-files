@@ -45,6 +45,65 @@
               const options = { hour: "numeric", minute: "numeric" };
               console.log(location);
 
+              const Time = ({ time }) => {
+                return (
+                  <>
+                    <div className="h4 my-2">
+                      {new Date(time.startTime).toLocaleDateString(undefined, {
+                        day: "numeric",
+                      })}
+                    </div>
+                    {new Date(time.startTime).toLocaleString(undefined, {
+                      hour: "numeric",
+                      minute: "numeric",
+                    })}
+                    <br />
+                    ~<br />
+                    {new Date(time.endTime).toLocaleString(undefined, {
+                      hour: "numeric",
+                      minute: "numeric",
+                    })}
+                  </>
+                );
+              };
+
+              const Card = ({ title, wx, pop }) => {
+                return (
+                  <div className="card text-center">
+                    <div className="card-header">
+                      <div className="h4 my-0">{title}</div>
+                    </div>
+                    <div className="card-body">
+                      <div className="row row-cols-3">
+                        {wx.time.map((time, index) => {
+                          return (
+                            // 時間序不會去更動，所以 index 可以當作 key
+                            <div key={index} className="col">
+                              <Time time={time} />
+                              <img
+                                src={`./weatherIcon/${time.parameter.parameterName}.svg`}
+                                alt={time.parameter.parameterName}
+                              />
+                              <div className="mt-2">
+                                {time.parameter.parameterName}
+                              </div>
+                              <div className="mt-2">
+                                {/* WEATHER ICON, CHANCE OF RAIN */}
+                                <i className="bi bi-umbrella-fill" />{" "}
+                                {
+                                  pop.time[index].parameter.parameterName // 使用剛在 city.weatherElement[0].time 傳進來的 index
+                                }
+                                %
+                              </div>
+                            </div>
+                          );
+                        })}
+                      </div>
+                    </div>
+                  </div>
+                );
+              };
+
               const App = () => {
                 return (
                   <>
@@ -53,66 +112,11 @@
                       {location.map((city) => {
                         return (
                           <div key={city.locationName} className="col">
-                            <div className="card text-center">
-                              <div className="card-header">
-                                <div className="h4 my-0">
-                                  {city.locationName}
-                                </div>
-                              </div>
-                              <div className="card-body">
-                                <div className="row row-cols-3">
-                                  {/* city.weatherElement[0] */}
-
-                                  {city.weatherElement[0].time.map(
-                                    (time, index) => {
-                                      return (
-                                        // 時間序不會去更動，所以 index 可以當作 key
-                                        <div key={index} className="col">
-                                          <div className="h4 my-2">
-                                            {new Date(
-                                              time.startTime
-                                            ).toLocaleDateString(undefined, {
-                                              day: "numeric",
-                                            })}
-                                          </div>
-                                          {new Date(
-                                            time.startTime
-                                          ).toLocaleString(undefined, {
-                                            hour: "numeric",
-                                            minute: "numeric",
-                                          })}
-                                          <br />
-                                          ~<br />
-                                          {new Date(
-                                            time.endTime
-                                          ).toLocaleString(undefined, {
-                                            hour: "numeric",
-                                            minute: "numeric",
-                                          })}
-                                          <img
-                                            src={`./weatherIcon/${time.parameter.parameterName}.svg`}
-                                            alt={time.parameter.parameterName}
-                                          />
-                                          <div className="mt-2">
-                                            {time.parameter.parameterName}
-                                          </div>
-                                          <div className="mt-2">
-                                            {/* WEATHER ICON, CHANCE OF RAIN */}
-                                            <i className="bi bi-umbrella-fill" />{" "}
-                                            {/* city.weatherElement[4] */}
-                                            {
-                                              city.weatherElement[4].time[index] // 使用剛在 city.weatherElement[0].time 傳進來的 index
-                                                .parameter.parameterName
-                                            }
-                                            %
-                                          </div>
-                                        </div>
-                                      );
-                                    }
-                                  )}
-                                </div>
-                              </div>
-                            </div>
+                            <Card
+                              title={city.locationName}
+                              wx={city.weatherElement[0]}
+                              pop={city.weatherElement[4]}
+                            />
                           </div>
                         );
                       })}
