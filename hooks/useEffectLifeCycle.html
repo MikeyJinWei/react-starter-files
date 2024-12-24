@@ -73,15 +73,42 @@
               //   console.log(3);
               // }, []);
 
-              // 加入 state 作為條件
-              useEffect(() => {
-                console.log(3);
-              }, [filterString, text]);
+              // // 加入 state 作為條件
+              // useEffect(() => {
+              //   console.log(3);
+              // }, [filterString, text]);
 
-              // #2 useEffect 的限制，不可在 if 內使用
+              // // #2 useEffect 的限制，不可在 if 內使用
+              // if (filterString === "animal") {
+              //   useEffect(() => {
+              //     console.log(3);
+              //   }, [filterString]);
+              // }
 
               // #3 非同步
               // useEffect callback 本身不能作為 async function 使用
+              // useEffect(() => {
+              //   const getPhotos = async () => {
+              //     const res = await axios.get(
+              //       `${api}?client_id=${accessKey}&query=${filterString}`
+              //     );
+              //     console.log(res);
+              //   };
+              //   getPhotos();
+              // }, [filterString]);
+
+              useEffect(() => {
+                (async () => {
+                  try {
+                    const res = await axios.get(
+                      `${api}?client_id=${accessKey}&QQQquery=${filterString}`
+                    );
+                    console.log(res);
+                  } catch (error) {
+                    console.log("錯誤", error);
+                  }
+                })();
+              });
 
               return (
                 <div>
