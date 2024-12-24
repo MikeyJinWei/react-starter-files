@@ -65,6 +65,16 @@
               // #1 建立非同步方法時，會因為渲染的關係不斷重複觸發
 
               // #2 useEffect
+              useEffect(() => {
+                const getPhotos = async () => {
+                  const res = await axios.get(
+                    `${api}?client_id=${accessKey}&query=${filterString}`
+                  );
+                  console.log(res);
+                };
+
+                getPhotos();
+              }, []);
 
               return (
                 <div>
