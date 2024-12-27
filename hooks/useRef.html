@@ -49,17 +49,33 @@
               //   console.dir(btnRef);
               // }, []);
 
-              // 3 操作 Bootstrap 改為使用 ref
+              // // 3 操作 Bootstrap 改為使用 ref
               const modalRef = useRef(null);
+              // let myModal; // 先宣告避免 openModal 報未定義
+              const myModal = useRef(null);
 
-              let myModal; // 先宣告避免 openModal 報未定義
               useEffect(() => {
-                myModal = new bootstrap.Modal(modalRef.current);
+                myModal.current = new bootstrap.Modal(modalRef.current);
               }, []);
 
               const openModal = () => {
                 myModal.show();
               };
+
+              // const [num, setNum] = useState(1);
+              // const numRef = useRef(1);
+              // console.log(1);
+              // console.log("num", num);
+              // console.log("numRef", numRef);
+
+              // useEffect(() => {
+              //   setInterval(() => {
+              //     // setNum(num + 1);
+              //     // setNum((prev) => prev + 1);
+              //     numRef.current += 1;
+              //     console.log("numRef", numRef);
+              //   }, 1000);
+              // }, []);
 
               return (
                 <>
