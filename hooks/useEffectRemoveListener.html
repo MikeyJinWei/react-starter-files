@@ -86,7 +86,7 @@
               // 加入 scroll 事件 - 超過列表底部時，自動載入下一頁資料
               // 修正滾動時過度觸發 request 的問題
 
-              const getPhotos = async (page = 1) => {
+              const getPhotos = async (page = 1, isNew = true) => {
                 try {
                   isLoading.current = true; // 開始載入資料時
                   // 搜尋特定需要加入 query
@@ -96,8 +96,13 @@
                   console.log(result);
                   setJsonData((prevData) => {
                     console.log("更新資料");
+                    // 新的關鍵字搜尋時，不保留舊資料直接更新
+                    if (isNew) {
+                      return [...result.data.results];
+                    }
                     return [...prevData, ...result.data.results];
                   });
+                  currentPage.current = page; // 每次都需要確認當前頁數
                   setTimeout(() => {
                     isLoading.current = false; // 資料載入完成，允許下一次載入
                   }, 1000);
@@ -111,7 +116,8 @@
               useEffect(() => {
                 getPhotos();
 
-                window.addEventListener("scroll", () => {
+                const scrollEvent = () => {
+                  console.log("scroll", scrollY);
                   const height =
                     listRef.current.offsetHeight +
                     listRef.current.offsetTop -
@@ -119,9 +125,16 @@
                   // 沒有載入資料且滾動到底部時，載入下一頁資料
                   if (!isLoading.current && window.scrollY > height) {
                     currentPage.current++;
-                    getPhotos(currentPage.current); // 注意要拿第幾頁的資料
+                    getPhotos(currentPage.current, false); // 注意要拿第幾頁的資料
+                    // 注意滾動觸發的 request，不使用新關鍵字搜尋
                   }
-                });
+                };
+
+                window.addEventListener("scroll", scrollEvent);
+
+                return () => {
+                  window.removeEventListener("scroll", scrollEvent);
+                };
               }, [filterString]);
 
               return (
