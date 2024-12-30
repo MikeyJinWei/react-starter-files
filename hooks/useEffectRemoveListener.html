@@ -74,6 +74,7 @@
               const [jsonData, setJsonData] = useState([]);
               const currentPage = useRef(1);
               const isLoading = useRef(false);
+              const [ratelimitRemaining, setRatelimitRemaining] = useState(50);
 
               const onSearchHandler = (e) => {
                 if (e.key === "Enter") {
@@ -102,6 +103,9 @@
                     }
                     return [...prevData, ...result.data.results];
                   });
+                  setRatelimitRemaining(
+                    result.headers["x-ratelimit-remaining"]
+                  );
                   currentPage.current = page; // 每次都需要確認當前頁數
                   setTimeout(() => {
                     isLoading.current = false; // 資料載入完成，允許下一次載入
@@ -117,7 +121,6 @@
                 getPhotos();
 
                 const scrollEvent = () => {
-                  console.log("scroll", scrollY);
                   const height =
                     listRef.current.offsetHeight +
                     listRef.current.offsetTop -
@@ -143,6 +146,7 @@
                     onSearchHandler={onSearchHandler}
                     filterString={filterString}
                   />
+                  <p>剩餘請求次數：{ratelimitRemaining}</p>
                   <div ref={listRef} className="row row-cols-2 g-3">
                     {jsonData.map((item) => (
                       <div className="col" key={item.id}>
